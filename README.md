@@ -46,3 +46,14 @@ Users can select different players, update their session data, and view visual s
 ├── Running.html      # Main HTML file for the home page and session dashboard
 ├── running.css       # Styling, layout, animations, and visual effects
 └── README.md         # Project documentation
+
+```
+
+## Author
+
+  Tony Xie
+
+## License
+
+  This project is for learning and personal use.
+
