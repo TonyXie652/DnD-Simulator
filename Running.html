@@ -1,0 +1,916 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>DND 跑团系统</title>
+  <link rel="stylesheet" href="running.css" />
+</head>
+<body>
+  <div class="particles" id="particles"></div>
+
+  <div id="homePage" class="page active">
+    <div class="container home-container">
+      <div class="corner-mark top-left"></div>
+      <div class="corner-mark bottom-right"></div>
+
+      <div class="title">DND 跑团系统</div>
+      <div class="subtitle">冒险 · 记录 · 统计</div>
+
+      <button class="menu-btn primary" onclick="showPage('sessionPage')">开始跑团</button>
+      <button class="menu-btn" onclick="handleClick('往期记录')">往期记录</button>
+      <button class="menu-btn" onclick="handleClick('总体数据')">总体数据</button>
+    </div>
+  </div>
+
+  <div id="sessionPage" class="page">
+    <div class="session-shell">
+      <div class="session-content-row">
+      <aside class="session-sidebar">
+        <div class="session-header-row">
+          <button class="back-btn" onclick="showPage('homePage')">← 返回</button>
+          <div class="session-title-wrap">
+            <h1 class="session-title">开始跑团</h1>
+            <p class="session-subtitle">本场队伍面板</p>
+          </div>
+        </div>
+
+        <div class="player-list" id="playerList">
+          <div class="player-card is-active" data-player="LZT">
+            <div class="player-main" onclick="selectPlayer('LZT')">
+              <div class="avatar avatar-1">L</div>
+              <div class="player-name">LZT</div>
+            </div>
+            <div class="player-stats">
+              <div class="stat-item">
+                <div class="stat-label">参与剧情推进次数</div>
+                <div class="stat-value" data-field="plot" data-player="LZT">5</div>
+              </div>
+              <div class="stat-item">
+                <div class="stat-label">本场命中率</div>
+                <div class="stat-value" data-field="hitRate" data-player="LZT">78%</div>
+              </div>
+              <div class="stat-item">
+                <div class="stat-label">本场总伤害</div>
+                <div class="stat-value" data-field="damage" data-player="LZT">126</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="player-card" data-player="ZJH">
+            <div class="player-main" onclick="selectPlayer('ZJH')">
+              <div class="avatar avatar-2">Z</div>
+              <div class="player-name">ZJH</div>
+            </div>
+            <div class="player-stats">
+              <div class="stat-item">
+                <div class="stat-label">参与剧情推进次数</div>
+                <div class="stat-value" data-field="plot" data-player="ZJH">3</div>
+              </div>
+              <div class="stat-item">
+                <div class="stat-label">本场命中率</div>
+                <div class="stat-value" data-field="hitRate" data-player="ZJH">64%</div>
+              </div>
+              <div class="stat-item">
+                <div class="stat-label">本场总伤害</div>
+                <div class="stat-value" data-field="damage" data-player="ZJH">89</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="player-card" data-player="FKW">
+            <div class="player-main" onclick="selectPlayer('FKW')">
+              <div class="avatar avatar-3">F</div>
+              <div class="player-name">FKW</div>
+            </div>
+            <div class="player-stats">
+              <div class="stat-item">
+                <div class="stat-label">参与剧情推进次数</div>
+                <div class="stat-value" data-field="plot" data-player="FKW">4</div>
+              </div>
+              <div class="stat-item">
+                <div class="stat-label">本场命中率</div>
+                <div class="stat-value" data-field="hitRate" data-player="FKW">82%</div>
+              </div>
+              <div class="stat-item">
+                <div class="stat-label">本场总伤害</div>
+                <div class="stat-value" data-field="damage" data-player="FKW">143</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="player-card" data-player="XST">
+            <div class="player-main" onclick="selectPlayer('XST')">
+              <div class="avatar avatar-4">X</div>
+              <div class="player-name">XST</div>
+            </div>
+            <div class="player-stats">
+              <div class="stat-item">
+                <div class="stat-label">参与剧情推进次数</div>
+                <div class="stat-value" data-field="plot" data-player="XST">6</div>
+              </div>
+              <div class="stat-item">
+                <div class="stat-label">本场命中率</div>
+                <div class="stat-value" data-field="hitRate" data-player="XST">71%</div>
+              </div>
+              <div class="stat-item">
+                <div class="stat-label">本场总伤害</div>
+                <div class="stat-value" data-field="damage" data-player="XST">110</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="player-card" data-player="FPQ">
+            <div class="player-main" onclick="selectPlayer('FPQ')">
+              <div class="avatar avatar-5">F</div>
+              <div class="player-name">FPQ</div>
+            </div>
+            <div class="player-stats">
+              <div class="stat-item">
+                <div class="stat-label">参与剧情推进次数</div>
+                <div class="stat-value" data-field="plot" data-player="FPQ">2</div>
+              </div>
+              <div class="stat-item">
+                <div class="stat-label">本场命中率</div>
+                <div class="stat-value" data-field="hitRate" data-player="FPQ">59%</div>
+              </div>
+              <div class="stat-item">
+                <div class="stat-label">本场总伤害</div>
+                <div class="stat-value" data-field="damage" data-player="FPQ">67</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="player-card" data-player="LYY">
+            <div class="player-main" onclick="selectPlayer('LYY')">
+              <div class="avatar avatar-6">L</div>
+              <div class="player-name">LYY</div>
+            </div>
+            <div class="player-stats">
+              <div class="stat-item">
+                <div class="stat-label">参与剧情推进次数</div>
+                <div class="stat-value" data-field="plot" data-player="LYY">7</div>
+              </div>
+              <div class="stat-item">
+                <div class="stat-label">本场命中率</div>
+                <div class="stat-value" data-field="hitRate" data-player="LYY">85%</div>
+              </div>
+              <div class="stat-item">
+                <div class="stat-label">本场总伤害</div>
+                <div class="stat-value" data-field="damage" data-player="LYY">158</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="viz-tabs">
+          <button class="viz-tab active" data-tab="overview" onclick="switchViz('overview')">总览</button>
+          <button class="viz-tab" data-tab="plot" onclick="switchViz('plot')">剧情推进</button>
+          <button class="viz-tab" data-tab="hitrate" onclick="switchViz('hitrate')">命中率</button>
+          <button class="viz-tab" data-tab="damage" onclick="switchViz('damage')">总伤害</button>
+        </div>
+      </aside>
+
+      <div class="session-right-placeholder">
+        <div id="viz-overview" class="detail-panel">
+          <div class="detail-hero">
+            <div id="detailAvatar" class="detail-avatar avatar avatar-1">L</div>
+            <div id="detailName" class="detail-name">LZT</div>
+          </div>
+
+          <div class="detail-stats-card">
+            <div class="detail-card-title">人物信息</div>
+
+            <div class="detail-stat-row">
+              <div class="detail-stat-label">参与剧情推进次数</div>
+              <div class="detail-stat-editable">
+                <button class="detail-stat-value" id="detailPlot" onclick="toggleEditor('plot')"><span id="detailPlotValue">0</span></button>
+                <div class="inline-editor" id="editor-plot">
+                  <input type="number" min="0" step="1" value="1" />
+                  <div class="inline-editor-actions three-actions">
+                    <button onclick="applyDelta('plot', 1)">+ 增加</button>
+                    <button onclick="applyDelta('plot', -1)">− 减少</button>
+                    <button onclick="resetStat('plot')">重置</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="detail-stat-row">
+              <div class="detail-stat-label">本场命中率</div>
+              <div class="detail-stat-editable">
+                <button class="detail-stat-value" id="detailHitRate" onclick="toggleEditor('hitRate')"><span id="detailHitRateValue">0%</span></button>
+                <div class="inline-editor hit-editor" id="editor-hitRate">
+                  <div class="inline-editor-actions three-actions">
+                    <button onclick="applyHit(true)">+ 命中</button>
+                    <button onclick="applyHit(false)">+ 未命中</button>
+                    <button onclick="resetStat('hitRate')">重置</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="detail-stat-row">
+              <div class="detail-stat-label">本场总伤害</div>
+              <div class="detail-stat-editable">
+                <button class="detail-stat-value" id="detailDamage" onclick="toggleEditor('damage')"><span id="detailDamageValue">0</span></button>
+                <div class="inline-editor" id="editor-damage">
+                  <input type="number" min="0" step="1" value="1" />
+                  <div class="inline-editor-actions three-actions">
+                    <button onclick="applyDelta('damage', 1)">+ 增加</button>
+                    <button onclick="applyDelta('damage', -1)">− 减少</button>
+                    <button onclick="resetStat('damage')">重置</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div id="viz-damage" class="damage-viz" style="display:none">
+          <div class="damage-viz-header">
+            <span class="damage-viz-title">本场总伤害分布</span>
+            <span class="damage-viz-total" id="damageTotalLabel">总计：0</span>
+          </div>
+          <svg id="damagePieSvg" class="damage-pie-svg" viewBox="0 0 600 380" preserveAspectRatio="xMidYMid meet"></svg>
+        </div>
+
+        <div id="viz-plot" class="damage-viz" style="display:none">
+          <div class="damage-viz-header">
+            <span class="damage-viz-title">剧情推进次数</span>
+            <span class="damage-viz-total" id="plotTotalLabel">总计：0 次</span>
+          </div>
+          <svg id="plotChartSvg" class="damage-pie-svg" viewBox="0 0 600 380" preserveAspectRatio="xMidYMid meet"></svg>
+        </div>
+
+        <div id="viz-hitrate" class="damage-viz" style="display:none">
+          <div class="damage-viz-header">
+            <span class="damage-viz-title">本场命中率</span>
+            <span class="damage-viz-total" id="hitRateTotalLabel">综合：—</span>
+          </div>
+          <svg id="hitRateChartSvg" class="damage-pie-svg" viewBox="0 0 600 380" preserveAspectRatio="xMidYMid meet"></svg>
+        </div>
+
+        <div id="viz-placeholder" class="viz-placeholder" style="display:none">
+          <span class="viz-placeholder-text">施工中…</span>
+        </div>
+      </div>
+      </div><!-- /session-content-row -->
+
+      <div class="session-footer">
+        <button class="end-session-btn" onclick="showEndConfirm()">⚔ 结束跑团</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 结束跑团确认弹窗 -->
+  <div id="endConfirmModal" class="modal-overlay" style="display:none">
+    <div class="modal-box">
+      <div class="modal-icon">⚔</div>
+      <div class="modal-title">确认结束本场跑团？</div>
+      <div class="modal-desc">将生成本场存档文件，<br>记录所有玩家的数据与占比。</div>
+      <div class="modal-actions">
+        <button class="modal-btn modal-btn-cancel" onclick="closeEndConfirm()">取消</button>
+        <button class="modal-btn modal-btn-confirm" onclick="confirmEndSession()">确认结束</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const players = {
+      LZT: { name: 'LZT', initial: 'L', avatarClass: 'avatar-1', plot: 0, hit: 0, miss: 0, damage: 0 },
+      ZJH: { name: 'ZJH', initial: 'Z', avatarClass: 'avatar-2', plot: 0, hit: 0, miss: 0, damage: 0 },
+      FKW: { name: 'FKW', initial: 'F', avatarClass: 'avatar-3', plot: 0, hit: 0, miss: 0, damage: 0 },
+      XST: { name: 'XST', initial: 'X', avatarClass: 'avatar-4', plot: 0, hit: 0, miss: 0, damage: 0 },
+      FPQ: { name: 'FPQ', initial: 'F', avatarClass: 'avatar-5', plot: 0, hit: 0, miss: 0, damage: 0 },
+      LYY: { name: 'LYY', initial: 'L', avatarClass: 'avatar-6', plot: 0, hit: 0, miss: 0, damage: 0 }
+    };
+
+    let currentPlayerId = 'LZT';
+    let currentViz = 'overview';
+
+    function handleClick(name) {
+      alert('你点击了：' + name + '后续可以在这里接页面跳转逻辑。');
+    }
+
+    function showPage(pageId) {
+      document.querySelectorAll('.page').forEach(page => {
+        page.classList.remove('active');
+      });
+      document.getElementById(pageId).classList.add('active');
+    }
+
+    function getHitRate(player) {
+      const total = player.hit + player.miss;
+      if (total === 0) return '0%';
+      return Math.round((player.hit / total) * 100) + '%';
+    }
+
+    function refreshLeftCard(playerId) {
+      const player = players[playerId];
+      const fields = {
+        plot: String(player.plot),
+        hitRate: getHitRate(player),
+        damage: String(player.damage)
+      };
+
+      Object.entries(fields).forEach(([field, value]) => {
+        const el = document.querySelector('.stat-value[data-player="' + playerId + '"][data-field="' + field + '"]');
+        if (el) el.textContent = value;
+      });
+    }
+
+    function selectPlayer(playerId) {
+      currentPlayerId = playerId;
+      const player = players[playerId];
+
+      document.querySelectorAll('.player-card').forEach(card => {
+        card.classList.toggle('is-active', card.dataset.player === playerId);
+      });
+
+      const detailAvatar = document.getElementById('detailAvatar');
+      detailAvatar.className = 'detail-avatar avatar ' + player.avatarClass;
+      detailAvatar.textContent = player.initial;
+
+      document.getElementById('detailName').textContent = player.name;
+      document.getElementById('detailPlotValue').textContent = String(player.plot);
+      document.getElementById('detailHitRateValue').textContent = getHitRate(player);
+      document.getElementById('detailDamageValue').textContent = String(player.damage);
+
+      closeAllEditors();
+      refreshLeftCard(playerId);
+      if (currentViz === 'damage')  drawDamagePie();
+      if (currentViz === 'plot')    drawPlotChart();
+      if (currentViz === 'hitrate') drawHitRateChart();
+    }
+
+    function closeAllEditors() {
+      document.querySelectorAll('.inline-editor').forEach(el => {
+        el.classList.remove('show');
+      });
+    }
+
+    function toggleEditor(field) {
+      const editor = document.getElementById('editor-' + field);
+      const willShow = !editor.classList.contains('show');
+      closeAllEditors();
+      if (willShow) {
+        editor.classList.add('show');
+        const input = editor.querySelector('input');
+        if (input) {
+          input.value = '1';
+          input.focus();
+          input.select();
+        }
+      }
+    }
+
+    function applyDelta(field, sign) {
+      const editor = document.getElementById('editor-' + field);
+      const input = editor.querySelector('input');
+      const raw = input.value.trim();
+      const amount = Number(raw);
+      if (!raw || Number.isNaN(amount) || amount < 0) return;
+
+      const player = players[currentPlayerId];
+      const nextValue = Math.max(0, player[field] + sign * amount);
+      player[field] = nextValue;
+      selectPlayer(currentPlayerId);
+    }
+
+    function applyHit(isHit) {
+      const player = players[currentPlayerId];
+      if (isHit) {
+        player.hit += 1;
+      } else {
+        player.miss += 1;
+      }
+      selectPlayer(currentPlayerId);
+    }
+
+    function resetStat(field) {
+      const player = players[currentPlayerId];
+
+      if (field === 'plot') {
+        player.plot = 0;
+      } else if (field === 'damage') {
+        player.damage = 0;
+      } else if (field === 'hitRate') {
+        player.hit = 0;
+        player.miss = 0;
+      }
+
+      selectPlayer(currentPlayerId);
+    }
+
+    function switchViz(tabName) {
+      currentViz = tabName;
+      document.querySelectorAll('.viz-tab').forEach(btn => {
+        btn.classList.toggle('active', btn.dataset.tab === tabName);
+      });
+      document.getElementById('viz-overview').style.display    = (tabName === 'overview') ? '' : 'none';
+      document.getElementById('viz-damage').style.display      = (tabName === 'damage')   ? '' : 'none';
+      document.getElementById('viz-plot').style.display        = (tabName === 'plot')     ? '' : 'none';
+      document.getElementById('viz-hitrate').style.display     = (tabName === 'hitrate')  ? '' : 'none';
+      document.getElementById('viz-placeholder').style.display = 'none';
+      if (tabName === 'damage')  drawDamagePie();
+      if (tabName === 'plot')    drawPlotChart();
+      if (tabName === 'hitrate') drawHitRateChart();
+    }
+
+    function drawDamagePie() {
+      const svg = document.getElementById('damagePieSvg');
+      if (!svg) return;
+      svg.innerHTML = '';
+
+      const colorMap = {
+        LZT: '#8b5cf6', ZJH: '#ec4899', FKW: '#f59e0b',
+        XST: '#10b981', FPQ: '#3b82f6', LYY: '#ef4444'
+      };
+      const order = ['LZT', 'ZJH', 'FKW', 'XST', 'FPQ', 'LYY'];
+
+      const data = order
+        .map(id => ({ id, name: players[id].name, damage: players[id].damage, color: colorMap[id] }))
+        .filter(d => d.damage > 0);
+
+      const total = data.reduce((s, d) => s + d.damage, 0);
+      document.getElementById('damageTotalLabel').textContent = '总计：' + total;
+
+      const VW = 600, VH = 380;
+      const cx = 300, cy = 192;
+      const r = 110, kinkR = 152, minGap = 36;
+      const leftX = 62, rightX = 538;
+
+      function mk(tag) { return document.createElementNS('http://www.w3.org/2000/svg', tag); }
+      function attr(el, obj) { Object.entries(obj).forEach(([k, v]) => el.setAttribute(k, v)); return el; }
+      const FONT = '"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif';
+
+      if (total === 0) {
+        const t = attr(mk('text'), {
+          x: cx, y: cy, 'text-anchor': 'middle', 'dominant-baseline': 'middle',
+          fill: 'rgba(245,239,230,0.3)', 'font-size': '16', 'font-family': FONT
+        });
+        t.textContent = '暂无伤害数据';
+        svg.appendChild(t);
+        return;
+      }
+
+      // 计算各切片
+      let curAngle = -Math.PI / 2;
+      const slices = data.map(d => {
+        const span = (d.damage / total) * Math.PI * 2;
+        const mid  = curAngle + span / 2;
+        const s = { ...d, startAngle: curAngle, endAngle: curAngle + span, midAngle: mid,
+                    pct: Math.round((d.damage / total) * 100) };
+        curAngle += span;
+        return s;
+      });
+
+      // 绘制扇形
+      slices.forEach(s => {
+        const x1 = cx + r * Math.cos(s.startAngle), y1 = cy + r * Math.sin(s.startAngle);
+        const x2 = cx + r * Math.cos(s.endAngle),   y2 = cy + r * Math.sin(s.endAngle);
+        const lg = (s.endAngle - s.startAngle) > Math.PI ? 1 : 0;
+        const p = attr(mk('path'), {
+          d: `M${cx},${cy}L${x1.toFixed(1)},${y1.toFixed(1)}A${r},${r} 0 ${lg},1 ${x2.toFixed(1)},${y2.toFixed(1)}Z`,
+          fill: s.color, stroke: '#0d0a11', 'stroke-width': '2.5'
+        });
+        svg.appendChild(p);
+        s._path = p;  // 保存引用，供 hover 使用
+      });
+
+      // 标签 Y 位置 —— 按左右分组展开，避免重叠
+      slices.forEach(s => {
+        s.isRight = Math.cos(s.midAngle) >= 0;
+        s.finalY  = cy + kinkR * Math.sin(s.midAngle);
+      });
+
+      function spread(group) {
+        if (!group.length) return;
+        group.sort((a, b) => a.finalY - b.finalY);
+        for (let iter = 0; iter < 80; iter++) {
+          let moved = false;
+          for (let i = 1; i < group.length; i++) {
+            if (group[i].finalY - group[i - 1].finalY < minGap) {
+              const m = (group[i].finalY + group[i - 1].finalY) / 2;
+              group[i - 1].finalY = m - minGap / 2;
+              group[i].finalY     = m + minGap / 2;
+              moved = true;
+            }
+          }
+          if (!moved) break;
+        }
+        group.forEach(s => { s.finalY = Math.max(22, Math.min(VH - 22, s.finalY)); });
+      }
+      spread(slices.filter(s =>  s.isRight));
+      spread(slices.filter(s => !s.isRight));
+
+      // 绘制引导线 + 文字标签，并为扇形附加 hover 效果
+      slices.forEach(s => {
+        // Hover：沿 midAngle 方向弹出 + 提亮
+        const hoverDx = (Math.cos(s.midAngle) * 10).toFixed(2);
+        const hoverDy = (Math.sin(s.midAngle) * 10).toFixed(2);
+        s._path.style.cursor = 'pointer';
+        s._path.style.transition = 'transform 0.22s ease, filter 0.22s ease';
+        s._path.addEventListener('mouseenter', () => {
+          s._path.style.transform = `translate(${hoverDx}px, ${hoverDy}px)`;
+          s._path.style.filter = 'brightness(1.22)';
+        });
+        s._path.addEventListener('mouseleave', () => {
+          s._path.style.transform = '';
+          s._path.style.filter = '';
+        });
+
+        const dotX  = cx + r * 1.05 * Math.cos(s.midAngle);
+        const dotY  = cy + r * 1.05 * Math.sin(s.midAngle);
+        const kinkX = cx + kinkR * Math.cos(s.midAngle);
+        const kinkY = cy + kinkR * Math.sin(s.midAngle);
+        const endX  = s.isRight ? rightX - 18 : leftX + 18;
+        const textX = s.isRight ? rightX : leftX;
+        const anchor = s.isRight ? 'start' : 'end';
+
+        // 折线
+        const pl = attr(mk('polyline'), {
+          points: `${dotX.toFixed(1)},${dotY.toFixed(1)} ${kinkX.toFixed(1)},${kinkY.toFixed(1)} ${endX},${s.finalY.toFixed(1)}`,
+          fill: 'none', stroke: s.color, 'stroke-width': '1.5', opacity: '0.72'
+        });
+        svg.appendChild(pl);
+
+        // 起始小圆点
+        svg.appendChild(attr(mk('circle'), {
+          cx: dotX.toFixed(1), cy: dotY.toFixed(1), r: '3.5', fill: s.color
+        }));
+
+        // 人名
+        const t1 = attr(mk('text'), {
+          x: textX, y: (s.finalY - 9).toFixed(1),
+          'text-anchor': anchor, fill: '#f0e8d8',
+          'font-size': '13', 'font-weight': '600', 'font-family': FONT
+        });
+        t1.textContent = s.name;
+        svg.appendChild(t1);
+
+        // 占比 + 伤害值
+        const t2 = attr(mk('text'), {
+          x: textX, y: (s.finalY + 10).toFixed(1),
+          'text-anchor': anchor, fill: s.color,
+          'font-size': '13', 'font-weight': '700', 'font-family': FONT
+        });
+        t2.textContent = s.pct + '%  ' + s.damage;
+        svg.appendChild(t2);
+      });
+    }
+
+    function drawPlotChart() {
+      const svg = document.getElementById('plotChartSvg');
+      if (!svg) return;
+      svg.innerHTML = '';
+
+      const colorMap = {
+        LZT: '#8b5cf6', ZJH: '#ec4899', FKW: '#f59e0b',
+        XST: '#10b981', FPQ: '#3b82f6', LYY: '#ef4444'
+      };
+      const order = ['LZT', 'ZJH', 'FKW', 'XST', 'FPQ', 'LYY'];
+      const FONT = '"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif';
+
+      function mk(tag) { return document.createElementNS('http://www.w3.org/2000/svg', tag); }
+      function attr(el, obj) { Object.entries(obj).forEach(([k, v]) => el.setAttribute(k, v)); return el; }
+      function addText(props, content) {
+        const t = attr(mk('text'), props);
+        t.textContent = String(content);
+        svg.appendChild(t);
+      }
+
+      const data = order.map(id => ({
+        id, name: players[id].name, initial: players[id].initial,
+        plot: players[id].plot, color: colorMap[id]
+      }));
+
+      const totalPlot = data.reduce((s, d) => s + d.plot, 0);
+      document.getElementById('plotTotalLabel').textContent = '总计：' + totalPlot + ' 次';
+
+      const VW = 600, VH = 380;
+      const padL = 44, padR = 20, padT = 32, padB = 56;
+      const chartW = VW - padL - padR;
+      const chartH = VH - padT - padB;
+      const chartX = padL, chartY = padT;
+      const chartBottom = chartY + chartH;
+
+      const maxVal = Math.max(...data.map(d => d.plot), 1);
+      const niceMax = Math.max(Math.ceil(maxVal / 5) * 5, 5);
+      const gridStep = niceMax / 5;
+
+      // Y 轴网格线 + 刻度
+      for (let i = 0; i <= 5; i++) {
+        const val = gridStep * i;
+        const y   = chartBottom - (val / niceMax) * chartH;
+        svg.appendChild(attr(mk('line'), {
+          x1: chartX, y1: y.toFixed(1), x2: chartX + chartW, y2: y.toFixed(1),
+          stroke: i === 0 ? 'rgba(255,255,255,0.20)' : 'rgba(255,255,255,0.07)',
+          'stroke-width': i === 0 ? '1.5' : '1'
+        }));
+        addText({
+          x: chartX - 8, y: (y + 4).toFixed(1),
+          'text-anchor': 'end', fill: 'rgba(245,239,230,0.40)',
+          'font-size': '11', 'font-family': FONT
+        }, Math.round(val));
+      }
+
+      // 柱子
+      const barGroupW = chartW / data.length;
+      const barW = Math.min(barGroupW * 0.56, 52);
+
+      data.forEach((d, i) => {
+        const cx  = chartX + (i + 0.5) * barGroupW;
+        const bx  = cx - barW / 2;
+        const barPx = (d.plot / niceMax) * chartH;
+        const by  = chartBottom - barPx;
+
+        // 空轨道
+        svg.appendChild(attr(mk('rect'), {
+          x: bx.toFixed(1), y: chartY, width: barW.toFixed(1), height: chartH,
+          rx: '7', fill: 'rgba(255,255,255,0.03)'
+        }));
+
+        // 实际柱子
+        if (d.plot > 0) {
+          const bar = attr(mk('rect'), {
+            x: bx.toFixed(1), y: by.toFixed(1),
+            width: barW.toFixed(1), height: barPx.toFixed(1),
+            rx: '7', fill: d.color
+          });
+          bar.style.cssText = 'cursor:pointer;transition:filter .2s ease,transform .2s ease;transform-box:fill-box;transform-origin:center bottom;';
+          bar.addEventListener('mouseenter', () => { bar.style.filter = 'brightness(1.28)'; bar.style.transform = 'scaleY(1.05)'; });
+          bar.addEventListener('mouseleave', () => { bar.style.filter = ''; bar.style.transform = ''; });
+          svg.appendChild(bar);
+
+          // 柱顶数值
+          addText({
+            x: cx.toFixed(1), y: (by - 7).toFixed(1),
+            'text-anchor': 'middle', fill: d.color,
+            'font-size': '14', 'font-weight': '700', 'font-family': FONT
+          }, d.plot);
+        }
+
+        // 玩家徽章（小圆 + 首字母）
+        svg.appendChild(attr(mk('circle'), {
+          cx: cx.toFixed(1), cy: (chartBottom + 22).toFixed(1), r: '13',
+          fill: 'rgba(255,255,255,0.05)', stroke: d.color, 'stroke-width': '1.5'
+        }));
+        addText({
+          x: cx.toFixed(1), y: (chartBottom + 27).toFixed(1),
+          'text-anchor': 'middle', fill: d.color,
+          'font-size': '11', 'font-weight': '700', 'font-family': FONT
+        }, d.initial);
+
+        // 玩家名
+        addText({
+          x: cx.toFixed(1), y: (chartBottom + 46).toFixed(1),
+          'text-anchor': 'middle', fill: 'rgba(245,239,230,0.65)',
+          'font-size': '11', 'font-family': FONT
+        }, d.name);
+      });
+    }
+
+    function drawHitRateChart() {
+      const svg = document.getElementById('hitRateChartSvg');
+      if (!svg) return;
+      svg.innerHTML = '';
+
+      const colorMap = {
+        LZT: '#8b5cf6', ZJH: '#ec4899', FKW: '#f59e0b',
+        XST: '#10b981', FPQ: '#3b82f6', LYY: '#ef4444'
+      };
+      const order = ['LZT', 'ZJH', 'FKW', 'XST', 'FPQ', 'LYY'];
+      const FONT = '"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif';
+
+      function mk(tag) { return document.createElementNS('http://www.w3.org/2000/svg', tag); }
+      function attr(el, obj) { Object.entries(obj).forEach(([k, v]) => el.setAttribute(k, v)); return el; }
+      function addText(props, content) {
+        const t = attr(mk('text'), props);
+        t.textContent = String(content);
+        svg.appendChild(t);
+      }
+
+      // 按命中率降序排列
+      const data = order.map(id => {
+        const p = players[id];
+        const tot  = p.hit + p.miss;
+        const rate = tot > 0 ? (p.hit / tot) * 100 : 0;
+        return { id, name: p.name, initial: p.initial, rate, hit: p.hit, total: tot, color: colorMap[id] };
+      }).sort((a, b) => b.rate - a.rate);
+
+      // 综合命中率标题
+      const allHit   = order.reduce((s, id) => s + players[id].hit,  0);
+      const allTotal = order.reduce((s, id) => s + players[id].hit + players[id].miss, 0);
+      document.getElementById('hitRateTotalLabel').textContent =
+        allTotal > 0 ? '综合：' + Math.round(allHit / allTotal * 100) + '%' : '暂无数据';
+
+      const VW = 600, VH = 380;
+      const padL = 78, padR = 72, padT = 28, padB = 36;
+      const chartW = VW - padL - padR;   // 450
+      const chartH = VH - padT - padB;   // 316
+      const chartX = padL, chartY = padT;
+
+      const barGroupH = chartH / data.length;
+      const barH = Math.min(barGroupH * 0.68, 37);
+
+      // 垂直网格线 + X 轴刻度（0/25/50/75/100%）
+      [0, 25, 50, 75, 100].forEach(pct => {
+        const x = chartX + (pct / 100) * chartW;
+        svg.appendChild(attr(mk('line'), {
+          x1: x.toFixed(1), y1: chartY,
+          x2: x.toFixed(1), y2: (chartY + chartH).toFixed(1),
+          stroke: pct === 0 ? 'rgba(255,255,255,0.20)' : 'rgba(255,255,255,0.07)',
+          'stroke-width': pct === 0 ? '1.5' : '1'
+        }));
+        addText({
+          x: x.toFixed(1), y: (chartY + chartH + 18).toFixed(1),
+          'text-anchor': 'middle', fill: 'rgba(245,239,230,0.40)',
+          'font-size': '11', 'font-family': FONT
+        }, pct + '%');
+      });
+
+      // 各玩家横向柱子（按降序排列）
+      data.forEach((d, i) => {
+        const cy    = chartY + (i + 0.5) * barGroupH;
+        const by    = cy - barH / 2;
+        const barPx = (d.rate / 100) * chartW;
+
+        // 空轨道
+        svg.appendChild(attr(mk('rect'), {
+          x: chartX, y: by.toFixed(1), width: chartW, height: barH.toFixed(1),
+          rx: '6', fill: 'rgba(255,255,255,0.035)'
+        }));
+
+        // 玩家徽章（左侧）
+        svg.appendChild(attr(mk('circle'), {
+          cx: (chartX - 58).toFixed(1), cy: cy.toFixed(1), r: '13',
+          fill: 'rgba(255,255,255,0.05)', stroke: d.color, 'stroke-width': '1.5'
+        }));
+        addText({
+          x: (chartX - 58).toFixed(1), y: (cy + 4.5).toFixed(1),
+          'text-anchor': 'middle', fill: d.color,
+          'font-size': '11', 'font-weight': '700', 'font-family': FONT
+        }, d.initial);
+        addText({
+          x: (chartX - 38).toFixed(1), y: (cy + 4.5).toFixed(1),
+          'text-anchor': 'start', fill: 'rgba(245,239,230,0.68)',
+          'font-size': '12', 'font-family': FONT
+        }, d.name);
+
+        // 实际柱子（含 hover：从左侧向右伸展 + 提亮）
+        if (d.rate > 0) {
+          const bar = attr(mk('rect'), {
+            x: chartX, y: by.toFixed(1),
+            width: barPx.toFixed(1), height: barH.toFixed(1),
+            rx: '6', fill: d.color
+          });
+          bar.style.cssText = 'cursor:pointer;transition:filter .2s ease,transform .2s ease;transform-box:fill-box;transform-origin:left center;';
+          bar.addEventListener('mouseenter', () => { bar.style.filter = 'brightness(1.28)'; bar.style.transform = 'scaleX(1.03)'; });
+          bar.addEventListener('mouseleave', () => { bar.style.filter = ''; bar.style.transform = ''; });
+          svg.appendChild(bar);
+        }
+
+        // 右侧标签：命中率（上）+ 命中/总次数（下）
+        addText({
+          x: '598', y: (cy - 4).toFixed(1),
+          'text-anchor': 'end',
+          fill: d.total > 0 ? d.color : 'rgba(245,239,230,0.28)',
+          'font-size': '13', 'font-weight': '700', 'font-family': FONT
+        }, d.total > 0 ? Math.round(d.rate) + '%' : '—');
+
+        if (d.total > 0) {
+          addText({
+            x: '598', y: (cy + 10).toFixed(1),
+            'text-anchor': 'end', fill: 'rgba(245,239,230,0.35)',
+            'font-size': '10', 'font-family': FONT
+          }, d.hit + '/' + d.total + '次');
+        }
+      });
+    }
+
+    // ── 结束跑团 ──────────────────────────────────────────
+    function showEndConfirm() {
+      document.getElementById('endConfirmModal').style.display = 'flex';
+    }
+
+    function closeEndConfirm() {
+      document.getElementById('endConfirmModal').style.display = 'none';
+    }
+
+    function generateArchiveContent() {
+      const order = ['LZT', 'ZJH', 'FKW', 'XST', 'FPQ', 'LYY'];
+
+      const totalDamage = order.reduce((s, id) => s + players[id].damage, 0);
+      const allHit      = order.reduce((s, id) => s + players[id].hit,    0);
+      const allMiss     = order.reduce((s, id) => s + players[id].miss,   0);
+      const allTotal    = allHit + allMiss;
+
+      // 按伤害降序排列
+      const sorted = [...order].sort((a, b) => players[b].damage - players[a].damage);
+
+      const now = new Date();
+      const dateStr = now.toLocaleString('zh-CN', {
+        year: 'numeric', month: '2-digit', day: '2-digit',
+        hour: '2-digit', minute: '2-digit', second: '2-digit'
+      });
+
+      const SEP  = '═'.repeat(52);
+      const LINE = '─'.repeat(52);
+      let out = '';
+
+      out += SEP + '\n';
+      out += '  DND 跑团存档\n';
+      out += '  ' + dateStr + '\n';
+      out += SEP + '\n\n';
+      out += '玩家数据（按伤害从高到低排列）\n';
+      out += LINE + '\n';
+
+      sorted.forEach(id => {
+        const p     = players[id];
+        const tot   = p.hit + p.miss;
+        const rate  = tot > 0 ? Math.round(p.hit / tot * 100) + '%' : '—';
+        const dmgPct = totalDamage > 0
+          ? Math.round(p.damage / totalDamage * 100) + '%' : '—';
+
+        out += '\n  ' + p.name + '\n';
+        out += '  ├─ 剧情推进次数：' + p.plot + ' 次\n';
+        out += '  ├─ 命中率：' + rate;
+        if (tot > 0) out += '（命中 ' + p.hit + ' / 共 ' + tot + ' 次）';
+        out += '\n';
+        out += '  ├─ 总伤害：' + p.damage + '\n';
+        out += '  └─ 伤害占比：' + dmgPct + '\n';
+      });
+
+      out += '\n' + LINE + '\n';
+      out += '汇总\n';
+      out += '  总伤害：' + totalDamage + '\n';
+      if (allTotal > 0) {
+        out += '  综合命中率：' + Math.round(allHit / allTotal * 100) + '%';
+        out += '（命中 ' + allHit + ' / 共 ' + allTotal + ' 次）\n';
+      }
+      out += '\n' + SEP + '\n';
+      return out;
+    }
+
+    async function confirmEndSession() {
+      closeEndConfirm();
+
+      const content  = generateArchiveContent();
+      const blob     = new Blob(['\uFEFF' + content], { type: 'text/plain;charset=utf-8' });
+
+      const now      = new Date();
+      const pad      = n => String(n).padStart(2, '0');
+      const filename = `跑团存档_${now.getFullYear()}-${pad(now.getMonth()+1)}-${pad(now.getDate())}`
+                     + `_${pad(now.getHours())}${pad(now.getMinutes())}.txt`;
+
+      // 优先使用 File System Access API（支持选择文件夹）
+      if (window.showSaveFilePicker) {
+        try {
+          const handle = await window.showSaveFilePicker({
+            suggestedName: filename,
+            types: [{ description: '文本存档', accept: { 'text/plain': ['.txt'] } }]
+          });
+          const writable = await handle.createWritable();
+          await writable.write(blob);
+          await writable.close();
+          return;
+        } catch (err) {
+          if (err.name === 'AbortError') return; // 用户取消
+        }
+      }
+
+      // 降级：触发浏览器下载
+      const url = URL.createObjectURL(blob);
+      const a   = Object.assign(document.createElement('a'), { href: url, download: filename });
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+    }
+
+    document.addEventListener('click', (e) => {
+      if (!e.target.closest('.detail-stat-editable')) {
+        closeAllEditors();
+      }
+    });
+
+    const particleContainer = document.getElementById('particles');
+    const particleCount = 34;
+
+    for (let i = 0; i < particleCount; i++) {
+      const p = document.createElement('span');
+      p.className = 'particle';
+      p.style.left = Math.random() * 100 + 'vw';
+      p.style.animationDuration = 9 + Math.random() * 9 + 's';
+      p.style.animationDelay = Math.random() * 10 + 's';
+      p.style.opacity = Math.random() * 0.4 + 0.15;
+      particleContainer.appendChild(p);
+    }
+
+    Object.keys(players).forEach(id => refreshLeftCard(id));
+    selectPlayer('LZT');
+  </script>
+</body>
+</html>

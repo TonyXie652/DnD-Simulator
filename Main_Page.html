@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>DND 跑团主页</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html, body {
+      width: 100%;
+      height: 100%;
+      font-family: "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+      overflow: hidden;
+      background: #0f0b12;
+      color: #f5efe6;
+    }
+
+    body {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background:
+        radial-gradient(circle at 20% 20%, rgba(164, 120, 255, 0.12), transparent 28%),
+        radial-gradient(circle at 80% 30%, rgba(255, 190, 120, 0.08), transparent 24%),
+        radial-gradient(circle at 50% 80%, rgba(130, 210, 255, 0.06), transparent 25%),
+        linear-gradient(180deg, #16101c 0%, #0d0a11 60%, #09070c 100%);
+    }
+
+    .particles {
+      position: absolute;
+      inset: 0;
+      overflow: hidden;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .particle {
+      position: absolute;
+      bottom: -20px;
+      width: 3px;
+      height: 3px;
+      border-radius: 50%;
+      background: rgba(255, 225, 170, 0.75);
+      box-shadow: 0 0 10px rgba(255, 210, 140, 0.45);
+      animation: floatUp linear infinite;
+      opacity: 0;
+    }
+
+    .particle:nth-child(3n) {
+      width: 2px;
+      height: 2px;
+      background: rgba(180, 160, 255, 0.65);
+      box-shadow: 0 0 12px rgba(180, 160, 255, 0.32);
+    }
+
+    .particle:nth-child(4n) {
+      width: 4px;
+      height: 4px;
+      background: rgba(255, 239, 196, 0.72);
+    }
+
+    /* 背景魔法线条层 */
+    body::before,
+    body::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+    }
+
+    body::before {
+      background:
+        repeating-linear-gradient(
+          120deg,
+          rgba(255,255,255,0.03) 0px,
+          rgba(255,255,255,0.03) 1px,
+          transparent 1px,
+          transparent 90px
+        ),
+        repeating-linear-gradient(
+          60deg,
+          rgba(255,255,255,0.02) 0px,
+          rgba(255,255,255,0.02) 1px,
+          transparent 1px,
+          transparent 120px
+        );
+      mask-image: radial-gradient(circle at center, black 35%, transparent 90%);
+      opacity: 0.8;
+    }
+
+    body::after {
+      background:
+        radial-gradient(circle at center, rgba(255, 220, 160, 0.08) 0%, transparent 18%),
+        radial-gradient(circle at center, transparent 0 180px, rgba(230, 205, 150, 0.08) 182px 184px, transparent 186px),
+        radial-gradient(circle at center, transparent 0 280px, rgba(160, 130, 255, 0.06) 282px 284px, transparent 286px);
+      filter: blur(0.4px);
+      opacity: 0.9;
+      animation: pulseRing 6s ease-in-out infinite;
+    }
+
+    .container {
+      position: relative;
+      z-index: 1;
+      width: min(90vw, 460px);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 22px;
+      padding: 48px 32px;
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 24px;
+      background: rgba(18, 14, 24, 0.68);
+      backdrop-filter: blur(10px);
+      box-shadow:
+        0 0 0 1px rgba(255,255,255,0.03) inset,
+        0 20px 60px rgba(0,0,0,0.45),
+        0 0 50px rgba(120, 90, 180, 0.12);
+      animation: panelFadeIn 1s ease-out;
+    }
+
+    .title {
+      margin-bottom: 8px;
+      font-size: 30px;
+      font-weight: 700;
+      letter-spacing: 3px;
+      color: #f3e7d0;
+      text-shadow: 0 0 12px rgba(255, 214, 153, 0.18);
+      opacity: 0;
+      transform: translateY(10px) scale(0.98);
+      animation: titleReveal 1s ease-out 0.2s forwards, titleGlow 3.5s ease-in-out 1.2s infinite;
+    }
+
+    .subtitle {
+      margin-bottom: 18px;
+      font-size: 14px;
+      color: rgba(245, 239, 230, 0.65);
+      letter-spacing: 1px;
+      opacity: 0;
+      transform: translateY(8px);
+      animation: subtitleReveal 0.8s ease-out 0.45s forwards;
+    }
+
+    .menu-btn {
+      width: 100%;
+      padding: 16px 20px;
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 16px;
+      background: linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.03));
+      color: #f7f0e5;
+      font-size: 18px;
+      font-weight: 600;
+      letter-spacing: 1px;
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+      transition: transform 0.26s ease, box-shadow 0.26s ease, border-color 0.26s ease, background 0.26s ease;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.24);
+      opacity: 0;
+      transform: translateY(14px);
+      animation: buttonReveal 0.7s ease-out forwards;
+    }
+
+    .menu-btn:nth-of-type(1) { animation-delay: 0.6s; }
+    .menu-btn:nth-of-type(2) { animation-delay: 0.78s; }
+    .menu-btn:nth-of-type(3) { animation-delay: 0.96s; }
+
+    .menu-btn::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: -120%;
+      width: 70%;
+      height: 100%;
+      transform: skewX(-25deg);
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.18), transparent);
+      transition: left 0.55s ease;
+    }
+
+    .menu-btn::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      border-radius: inherit;
+      box-shadow: inset 0 0 0 0 rgba(255, 223, 161, 0.16);
+      transition: box-shadow 0.26s ease;
+      pointer-events: none;
+    }
+
+    .menu-btn:hover {
+      transform: translateY(-4px) scale(1.02);
+      border-color: rgba(255, 221, 168, 0.42);
+      background: linear-gradient(180deg, rgba(255, 224, 163, 0.14), rgba(180, 140, 255, 0.08));
+      box-shadow:
+        0 16px 34px rgba(0,0,0,0.36),
+        0 0 20px rgba(255, 210, 140, 0.10),
+        0 0 36px rgba(126, 92, 192, 0.10);
+    }
+
+    .menu-btn:hover::before {
+      left: 145%;
+    }
+
+    .menu-btn:hover::after {
+      box-shadow: inset 0 0 0 1px rgba(255, 232, 191, 0.18);
+    }
+
+    .menu-btn:active {
+      transform: translateY(-1px) scale(1.005);
+    }
+
+    .menu-btn.primary {
+      border-color: rgba(255, 215, 150, 0.22);
+      background: linear-gradient(180deg, rgba(255, 205, 120, 0.16), rgba(255, 205, 120, 0.06));
+    }
+
+    .corner-mark {
+      position: absolute;
+      width: 120px;
+      height: 120px;
+      border: 1px solid rgba(255,255,255,0.05);
+      opacity: 0.5;
+    }
+
+    .corner-mark.top-left {
+      top: 18px;
+      left: 18px;
+      border-right: none;
+      border-bottom: none;
+      border-radius: 18px 0 0 0;
+    }
+
+    .corner-mark.bottom-right {
+      right: 18px;
+      bottom: 18px;
+      border-left: none;
+      border-top: none;
+      border-radius: 0 0 18px 0;
+    }
+
+    @keyframes floatUp {
+      0% {
+        transform: translateY(0) scale(0.8);
+        opacity: 0;
+      }
+      12% {
+        opacity: 0.9;
+      }
+      80% {
+        opacity: 0.55;
+      }
+      100% {
+        transform: translateY(-110vh) scale(1.2);
+        opacity: 0;
+      }
+    }
+
+    @keyframes pulseRing {
+      0%, 100% {
+        transform: scale(1);
+        opacity: 0.85;
+      }
+      50% {
+        transform: scale(1.025);
+        opacity: 1;
+      }
+    }
+
+    @keyframes panelFadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(14px) scale(0.985);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+    }
+
+    @keyframes titleReveal {
+      from {
+        opacity: 0;
+        transform: translateY(10px) scale(0.98);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+    }
+
+    @keyframes subtitleReveal {
+      from {
+        opacity: 0;
+        transform: translateY(8px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes titleGlow {
+      0%, 100% {
+        text-shadow: 0 0 12px rgba(255, 214, 153, 0.16);
+      }
+      50% {
+        text-shadow: 0 0 22px rgba(255, 214, 153, 0.30), 0 0 38px rgba(168, 127, 255, 0.10);
+      }
+    }
+
+    @keyframes buttonReveal {
+      from {
+        opacity: 0;
+        transform: translateY(14px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @media (max-width: 520px) {
+      .container {
+        padding: 36px 20px;
+        gap: 18px;
+      }
+
+      .title {
+        font-size: 24px;
+      }
+
+      .menu-btn {
+        font-size: 16px;
+        padding: 14px 16px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="particles" id="particles"></div>
+
+  <div class="container">
+    <div class="corner-mark top-left"></div>
+    <div class="corner-mark bottom-right"></div>
+
+    <div class="title">DND 跑团系统</div>
+    <div class="subtitle">冒险 · 记录 · 统计</div>
+
+    <button class="menu-btn primary" onclick="window.location.href='Running.html'">开始跑团</button>
+    <button class="menu-btn" onclick="handleClick('往期记录')">往期记录</button>
+    <button class="menu-btn" onclick="handleClick('总体数据')">总体数据</button>
+  </div>
+
+  <script>
+    function handleClick(name) {
+      alert('你点击了：' + name + '\n后续可以在这里接页面跳转逻辑。');
+    }
+
+    const particleContainer = document.getElementById('particles');
+    const particleCount = 34;
+
+    for (let i = 0; i < particleCount; i++) {
+      const p = document.createElement('span');
+      p.className = 'particle';
+      p.style.left = Math.random() * 100 + 'vw';
+      p.style.animationDuration = 9 + Math.random() * 9 + 's';
+      p.style.animationDelay = Math.random() * 10 + 's';
+      p.style.opacity = Math.random() * 0.4 + 0.15;
+      particleContainer.appendChild(p);
+    }
+  </script>
+</body>
+</html>
